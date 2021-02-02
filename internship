@@ -1,0 +1,149 @@
+package Project;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+
+public class Panel extends JPanel{
+
+private JButton num[] = new JButton[10];
+private JTextField output = new JTextField();
+private JButton backspace = new JButton(">"); JButton equal = new JButton("=");
+private JButton plus = new JButton("+"); JButton minus = new JButton("-");JButton multi = new JButton("*");JButton div = new JButton("/");
+String record = "";
+char action;
+
+
+public Panel(){
+setLayout(null);
+
+num[0] = new JButton("0");
+num[0].setBounds(125, 275, 60, 60);
+add(num[0]);
+
+backspace.setBounds(190, 275, 60, 60);
+add(backspace);
+
+equal.setBounds(60, 275, 60, 60);
+add(equal);
+
+plus.setBounds(5, 80, 50, 60);
+add(plus);
+
+minus.setBounds(5, 145, 50, 60);
+add(minus);
+
+multi.setBounds(5, 210, 50, 60);
+add(multi);
+
+div.setBounds(5, 275, 50, 60);
+add(div);
+
+
+for (int x=0; x<3; x++) {
+for (int y=0; y<3; y++) {
+num[x*3+y+1] = new JButton((x*3+y+1)+ "");
+num[x*3+y+1].setBounds(x*(60+5)+60, y*(60+5)+80,60,60);
+add(num[x*3+y+1]);
+
+}
+
+}
+output.setBounds(5, 10, 245, 60);
+output.setEditable(false);
+add(output);
+
+
+ActionListener l = (ActionEvent e) -> {
+JButton b = (JButton)e.getSource();
+output.setText(output.getText()+ b.getText());
+};
+
+
+for(JButton b : num){
+b.addActionListener(l);
+}
+
+
+ActionListener y = (ActionEvent e) -> {
+output.setText("");
+};
+
+backspace.addActionListener(y);
+
+
+ActionListener a = (ActionEvent e) -> {
+record = output.getText();
+action = '+';
+if (record!=null) {
+output.setText("");
+}
+};
+
+plus.addActionListener(a);
+
+
+ActionListener c = (ActionEvent e) -> {
+record = output.getText();
+action = '-';
+if (record!=null) {
+output.setText("");
+}
+};
+
+minus.addActionListener(c);
+
+
+ActionListener d = (ActionEvent e) -> {
+record = output.getText();
+action = '*';
+if (record!=null) {
+output.setText("");
+}
+};
+
+multi.addActionListener(d);
+
+ActionListener f = (ActionEvent e) -> {
+record = output.getText();
+action = '/';
+if (record!=null) {
+output.setText("");
+}
+};
+
+div.addActionListener(f);
+
+ActionListener k = (ActionEvent e) -> {
+int firstValue = Integer.valueOf(record);
+int secondValue = Integer.valueOf(output.getText());
+int result;
+switch(action)
+{
+case '/':
+result = firstValue / secondValue; break;
+case '*':
+result = firstValue * secondValue; break;
+case '+':
+result = firstValue + secondValue; break;
+case '-':
+result = firstValue - secondValue; break;
+default:
+throw new IllegalArgumentException("Unknown operator.");
+}
+
+
+output.setText(Integer.toString(result));
+};
+
+equal.addActionListener(k);
+};
+
+
+
+
+
+}
